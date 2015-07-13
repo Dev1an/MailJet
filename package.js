@@ -15,6 +15,8 @@ Package.onUse(function(api) {
   api.use('http')
 
   api.addFiles('mailjet.js', 'server')
+
+  api.export("Mailjet")
 })
 
 Package.onTest(function(api) {
