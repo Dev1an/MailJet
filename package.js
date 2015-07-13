@@ -11,12 +11,14 @@ Package.describe({
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom('1.1.0.2');
-  api.addFiles('mailjet.js');
-});
+  api.versionsFrom('1.1.0.2')
+  api.use('http')
+
+  api.addFiles('mailjet.js', 'server')
+})
 
 Package.onTest(function(api) {
-  api.use('tinytest');
-  api.use('devian:mailjet');
-  api.addFiles('mailjet-tests.js');
+  api.use('tinytest')
+  api.use('devian:mailjet')
+  api.addFiles('mailjet-tests.js')
 });
