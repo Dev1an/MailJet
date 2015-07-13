@@ -2,7 +2,7 @@
 
 Add the atmosphere package to your app: `meteor add devian:mailjet`
 
-Use the followng `settings.json` file with your app:
+Use the followng `settings.json` file with your app (see [Meteor docs page](http://docs.meteor.com/#/full/meteor_settings) about settings.json):
 
 ```js
 {
