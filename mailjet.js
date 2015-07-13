@@ -1,49 +1,51 @@
 const baseUrl = 'https://api.mailjet.com/v3/REST/'
 const contactUrl = baseUrl + 'contact/'
 
-Mailjet = {
-	contact: contact,
-	addRecipient: addRecipient
-}
+var getContact = Meteor.wrapAsync(function (id, callback) {
+	HTTP.get(contactUrl + id, auth, function(error, result) {
+		if (error) {
+			callback(error, {Count: 0})
+		} else {
+			callback(error, result.data)
+		}
+	})
+})
 
-function getContact(id) {
-	var result
-	try {
-		result = HTTP.get(contactUrl + id, auth).data
-	} catch (error) {
-		result = {Count: 0}
-	}
-	return result
-}
-
-function createContact(mailAddress) {
+var createContact = Meteor.wrapAsync(function (mailAddress, callback) {
 	return HTTP.post(contactUrl, _.extend({
 		data: {
 			Email: mailAddress
 		}
-	}, auth)).data
-}
+	}, auth), function(error, result) {
+		callback(error, result.data)
+	})
+})
 
-function contact(mailAddress) {
+var contact = Meteor.wrapAsync(function (mailAddress, callback) {
 	const contacts = getContact(mailAddress)
 	var contact
 	if (contacts.Count > 0) {
-		return contacts.Data[0]
+		callback(undefined, contacts.Data[0])
 	} else {
-		return createContact(mailAddress).Data[0]
+		callback(undefined, createContact(mailAddress).Data[0])
 	}
-}
+})
 
-function addRecipient(contactId, listId) {
+var addRecipient = function (contactId, listId, callback) {
 	HTTP.post(baseUrl + 'listrecipient/', _.extend({
 		data: {
 			ContactID: contactId,
 			ListID: listId,
 			IsActive: true
 		}
-	}, auth))
+	}, auth), callback)
 }
 
 var auth = {
 	auth: Meteor.settings.mailjet.apiKey + ':' + Meteor.settings.mailjet.secretKey
+}
+
+Mailjet = {
+	contact: contact,
+	addRecipient: addRecipient
 }
