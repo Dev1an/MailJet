@@ -32,7 +32,7 @@ returns
   Data: 
    [ { CreatedAt: '2015-07-13T09:59:17Z',
        DeliveredCount: 0,
-       Email: 'damiaan@me.com',
+       Email: 'info@devian.tk',
        ID: 1479886203,
        IsOptInPending: false,
        IsSpamComplaining: false,
