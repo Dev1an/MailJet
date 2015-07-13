@@ -19,7 +19,7 @@ Use the followng `settings.json` file with your app:
 
 ## Retreive contacts
 
-Retreive a contact with `Mailjet.contact(address: String)`
+Retreive a contact with `Mailjet.contact(address: String)`. When there is no contact with this email address, a new contact will be creates automatically.
 
 ### Example: 
 
