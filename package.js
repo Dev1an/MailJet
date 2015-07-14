@@ -1,6 +1,6 @@
 Package.describe({
   name: 'devian:mailjet',
-  version: '0.0.6',
+  version: '0.0.7',
   // Brief, one-line summary of the package.
   summary: 'Add contacts and subscribe to mailinglists on MailJet',
   // URL to the Git repository containing the source code for this package.
@@ -14,7 +14,7 @@ Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2')
   api.use('http')
 
-  api.addFiles(['smtp.js', 'mailjet.js'], 'server')
+  api.addFiles(['smtp.js', 'mailjet.js', 'hashing.js'], 'server')
 
   api.export("Mailjet")
 })
