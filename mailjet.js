@@ -27,7 +27,9 @@ var contact = Meteor.wrapAsync(function (mailAddress, callback) {
 		if (result.Count > 0) {
 			callback(undefined, result.Data[0])
 		} else {
-			callback(undefined, createContact(mailAddress).Data[0])
+			var res = createContact(mailAddress).Data[0]
+			res.isNew = true
+			callback(undefined, res)
 		}
 	})
 })
@@ -60,6 +62,15 @@ var subscribeRecipient = Meteor.wrapAsync(function (recipientId, callback) {
 	console.log("resubscribing")
 })
 
+var isSubscribed = Meteor.wrapAsync(function (mailAddress, list, callback) {
+	const contact = contact(mailAddress)
+	if (contact.isNew) callback(undefined, false)
+	else {
+		const recipients = getRecipient(contact.ID, listId).data
+		callback(undefined, recipients.Count > 0 && !recipients.Data[0].IsUnsubscribed)
+	}
+})
+
 var subscribe = Meteor.wrapAsync(function(mailAddress, listId, callback) {
 	const contactId = contact(mailAddress).ID
 	const recipients = getRecipient(contactId, listId).data
@@ -77,8 +88,6 @@ var auth = {
 
 Mailjet = {
 	contact: contact,
-	addRecipient: addRecipient,
 	subscribe: subscribe,
-	subscribeRecipient: subscribeRecipient,
-	getRecipient: getRecipient
+	isSubscribed: isSubscribed
 }
