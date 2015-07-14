@@ -1,6 +1,6 @@
 Package.describe({
   name: 'devian:mailjet',
-  version: '0.0.8',
+  version: '0.0.9',
   // Brief, one-line summary of the package.
   summary: 'Add contacts and subscribe to mailinglists on MailJet',
   // URL to the Git repository containing the source code for this package.

@@ -62,11 +62,11 @@ var subscribeRecipient = Meteor.wrapAsync(function (recipientId, callback) {
 	console.log("resubscribing")
 })
 
-var isSubscribed = Meteor.wrapAsync(function (mailAddress, list, callback) {
-	const contact = contact(mailAddress)
-	if (contact.isNew) callback(undefined, false)
+var isSubscribed = Meteor.wrapAsync(function (mailAddress, listId, callback) {
+	const contactInfo = contact(mailAddress)
+	if (contactInfo.isNew) callback(undefined, false)
 	else {
-		const recipients = getRecipient(contact.ID, listId).data
+		const recipients = getRecipient(contactInfo.ID, listId).data
 		callback(undefined, recipients.Count > 0 && !recipients.Data[0].IsUnsubscribed)
 	}
 })
